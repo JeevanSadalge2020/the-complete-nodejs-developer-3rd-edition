@@ -1,1 +1,0 @@
-console.log("WELCOME TO THE NODE JS COURSE");
