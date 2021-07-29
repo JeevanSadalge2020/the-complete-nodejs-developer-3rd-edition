@@ -1,22 +1,75 @@
-const fs = require("fs");
-const validator = require("validator");
+// const fs = require("fs");
+// IMPORTANT Terminal string styling done right
+// const chalk = require("chalk");
+// IMPORTANT Yargs helps you build interactive command line tools, by parsing arguments and generating an elegant user interface.
+const yargs = require("yargs");
+const notes = require("./notes");
 const chalk = require("chalk");
 
-// Before running this application, Please delete all the .txt files
+yargs.version("1.1.0");
+// NOTE ADD command
+yargs.command({
+  command: "add",
+  describe: "add a new note",
+  builder: {
+    title: {
+      describe: "note title",
+      demandOption: true,
+      type: "string",
+    },
+    body: {
+      describe: "note body",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    console.log(chalk.bgBlueBright.blackBright("Adding your note"));
+    notes.addNote(argv.title, argv.body);
+  },
+});
 
-// NOTE create a note.txt file and write in it
-fs.writeFileSync("notes.txt", "Jeevan Sadalge");
+// NOTE REMOVE command
+yargs.command({
+  command: "remove",
+  describe: "remove a note",
+  builder: {
+    title: {
+      describe: "note title",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    console.log(chalk.bgBlueBright.blackBright("Removing your note"));
+    notes.removeNote(argv.title);
+  },
+});
 
-// NOTE Append a text inside it
-fs.appendFileSync("notes.txt", "\nA Full Stack Developer");
+// NOTE LIST command
+yargs.command({
+  command: "list",
+  describe: "lists all the notes",
+  handler() {
+    console.log(chalk.bgBlueBright.blackBright("Below are all your notes"));
+    notes.listNotes();
+  },
+});
 
-// NOTE create a email.txt file and write a mail in it
-fs.writeFileSync("email.txt", "jeevansadalg@gmail.com");
-
-// NOTE Read content from email.txt file
-const email = fs.readFileSync("email.txt", "utf8");
-if (validator.isEmail(email)) {
-  console.log(chalk.black.bgGreen.bold("EMAIL IS VALID"));
-} else {
-  console.log(chalk.white.bgRed.bold("EMAIL IS INVALID"));
-}
+// NOTE READ command
+yargs.command({
+  command: "read",
+  describe: "read a note",
+  builder: {
+    title: {
+      describe: "note title",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    console.log(chalk.bgYellowBright.grey("Reading your note"));
+    notes.readNote(argv.title);
+  },
+});
+yargs.argv;
