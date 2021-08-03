@@ -2,6 +2,9 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
+const geoCode = require("./utils/geocode");
+const foreCast = require("./utils/forecast");
+
 const publicDir = path.join(__dirname, "..", "public");
 const viewsDir = path.join(__dirname, "..", "views");
 
@@ -32,7 +35,25 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-  res.send("weather");
+  const address = req.query.address;
+  if (!address) res.send("Please provide an address");
+  else {
+    geoCode(address, (err, data) => {
+      if (err) res.send(err);
+      else {
+        foreCast(data.longitude, data.lattitude, (err, datas) => {
+          if (err) res.send(err);
+          else {
+            res.send({
+              Location: data.location,
+              Forecast: datas.weather_descriptions,
+              Temperature: datas.temperature,
+            });
+          }
+        });
+      }
+    });
+  }
 });
 
 app.get("/help/*", (req, res) => {
