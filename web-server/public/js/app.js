@@ -9,16 +9,14 @@ document.querySelector("form").addEventListener("submit", e => {
 
   fetch(url)
     .then(response => {
-      return response.json();
+      response.json().then(data => {
+        if (data.error) pone.textContent = data.error;
+        else {
+          ptwo.textContent = `Location:${data.Location}--- Weather:${data.Forecast}--- Temperature:${data.Temperature}`;
+        }
+      });
     })
-    .then(data => {
-      if (data.error) pone.textContent = data.error;
-      else {
-        // console.log("Location:", data.Location);
-        // console.log("Weather:", data.Forecast);
-        // console.log("Temperature:", data.Temperature);
-        ptwo.textContent = `Location:${data.Location}--- Weather:${data.Forecast}--- Temperature:${data.Temperature}`;
-      }
+    .catch(err => {
+      ptwo.textContent = err;
     });
-  // .catch(err => console.log(err));
 });
