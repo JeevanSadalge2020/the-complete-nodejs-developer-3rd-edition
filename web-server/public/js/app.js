@@ -5,7 +5,7 @@ ptwo = document.querySelector(".two");
 document.querySelector("form").addEventListener("submit", e => {
   e.preventDefault();
   const locationSearched = document.querySelector("input").value;
-  const url = `http://localhost:3000/weather?address=${locationSearched}`;
+  const url = `/weather?address=${locationSearched}`;
 
   fetch(url)
     .then(response => {
