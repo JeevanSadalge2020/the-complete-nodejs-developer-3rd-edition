@@ -9,7 +9,7 @@ function geoCode(address, callback) {
       callback("Provide a valid location", undefined);
     else {
       callback(undefined, {
-        location: body.features[0].place_name_en,
+        // location: body.features[0].place_name_en,
         longitude: body.features[0].center[0],
         lattitude: body.features[0].center[1],
       });

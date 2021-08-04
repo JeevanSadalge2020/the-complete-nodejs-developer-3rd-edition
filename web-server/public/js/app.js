@@ -12,7 +12,8 @@ document.querySelector("form").addEventListener("submit", e => {
       response.json().then(data => {
         if (data.error) pone.textContent = data.error;
         else {
-          ptwo.textContent = `Location:${data.Location}--- Weather:${data.Forecast}--- Temperature:${data.Temperature}`;
+          console.log(data);
+          ptwo.textContent = `You have serched weather forecast for a location ${data.location}. Weather is observed to be ${data.forecast} at a local time of ${data.observationTime}. The temperature observed is ${data.temperature} but it feels like ${data.feelsLikeTemperature}.`;
         }
       });
     })

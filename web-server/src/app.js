@@ -46,9 +46,11 @@ app.get("/weather", (req, res) => {
           if (err) res.send(err);
           else {
             res.send({
-              Location: data.location,
-              Forecast: datas.weather_descriptions,
-              Temperature: datas.temperature,
+              location: address,
+              forecast: datas.weatherDescriptions,
+              temperature: datas.temperature,
+              observationTime: datas.observationTime,
+              feelsLikeTemperature: datas.feelsLike,
             });
           }
         });

@@ -6,11 +6,14 @@ function foreCast(longitude, lattitude, callback) {
     else if (body.error) {
       callback(body.error.info, undefined);
     } else {
-      // console.log("status code:-", response.statusCode);
+      console.log(body);
       callback(undefined, {
-        weather_descriptions: body.current.weather_descriptions[0],
+        weatherDescriptions: body.current.weather_descriptions[0],
         temperature: body.current.temperature,
         feelsLike: body.current.feelslike,
+        observationTime: body.current.observation_time,
+        country: body.location.country,
+        location: body.location.name,
       });
     }
   });
